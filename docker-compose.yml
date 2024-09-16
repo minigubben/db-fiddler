@@ -1,0 +1,23 @@
+services:
+  db:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+  runner:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: bash -c "sleep 2 && cd /workdir && rerun --pattern *.sql --background -- psql -h db -U postgres -d postgres -f /workdir/test.sql"
+    depends_on:
+      - db
+    volumes:
+      - ./:/workdir
+    environment:
+      - PGPASSWORD=postgres
+
+volumes:
+  postgres-data:
