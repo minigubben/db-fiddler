@@ -1,4 +1,4 @@
-### db-fiddler, a tool to easy test database queries.
+### db-fiddler, a dockerimage to easy test database queries.
 
 Run `docker compose up` create the database and start the monitor
 
